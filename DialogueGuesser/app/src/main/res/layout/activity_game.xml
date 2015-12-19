@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="perk.com.dialogueguesser.GameActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/container_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_options" />
+    </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/actor_actress_hint"
+                android:layout_alignParentLeft="true">
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/actor"
+                    android:id="@+id/actor_hint"
+                    />
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/actress"
+                    android:id="@+id/actress_hint"
+                    android:layout_below="@+id/actor_hint"
+                  />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/actor_actress_hint"
+                android:layout_toLeftOf="@+id/director_bomb_hint"
+                android:padding="5dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:id="@+id/dialog_value"
+                    android:singleLine="false"
+                    android:background="@drawable/text_back"
+                    android:text="Basanti In Kutto ke Samne mat nachna,vhhbjnknkn dtfyg ugu tctcbii"
+                    android:textSize="16sp"
+                    android:gravity="center"/>
+
+            </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/director_bomb_hint"
+            android:layout_alignParentRight="true"
+
+            >
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="100dp"
+                android:src="@drawable/director"
+                android:id="@+id/direcor_hint"
+
+                />
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="100dp"
+                android:src="@drawable/bomb"
+                android:id="@+id/bomb_hint"
+                android:layout_below="@+id/direcor_hint"
+
+                />
+        </RelativeLayout>
+
+
+
+        </RelativeLayout>
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/mAnswer"
+            android:layout_weight="0.7"
+            android:horizontalSpacing="1dp"
+            android:verticalSpacing="1dp"
+            android:numColumns="6"
+            android:layout_marginTop="10dp"
+            android:padding="2dp"
+            android:layout_below="@+id/director_bomb_hint"
+            android:gravity="center"
+            android:stretchMode="columnWidth"
+            >
+
+        </GridView>
+
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+
+            android:id="@+id/mGuess"
+            android:verticalSpacing="1dp"
+            android:horizontalSpacing="1dp"
+            android:numColumns="6"
+            android:padding="2dp"
+            android:layout_below="@+id/mAnswer"
+            android:gravity="center"
+            android:stretchMode="columnWidth"
+            >
+
+        </GridView>
+    </LinearLayout>
+
+
+</RelativeLayout>

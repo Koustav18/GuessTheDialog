@@ -1,0 +1,19 @@
+<resources>
+
+    <style name="DialogMaterialTheme" parent="DialogMaterialTheme.Base">
+
+    </style>
+
+    <style name="DialogMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="DialogMaterialTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="DialogMaterialTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>

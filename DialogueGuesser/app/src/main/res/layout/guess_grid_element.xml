@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:layout_margin="15dp"
+    android:background="@color/colorGuessBg1"
+    tools:context="com.example.nithyanantham.hackathon1.GamePage">
+
+
+   <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="45dp"
+       android:text="A"
+       android:gravity="center"
+       android:textAllCaps="true"
+       android:layout_gravity="center"
+       android:textSize="22sp"
+       android:id="@+id/mGuessCharacter"
+       android:textColor="@color/colorGuessText1"
+       />
+
+
+</LinearLayout>
