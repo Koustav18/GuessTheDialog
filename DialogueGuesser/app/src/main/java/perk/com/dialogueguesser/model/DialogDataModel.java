@@ -11,7 +11,16 @@ public class DialogDataModel {
     private String actress;
     private String director;
     private String movieName;
+    private String genre;
     private boolean isAttempted;
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
 
     public boolean isAttempted() {
         return isAttempted;

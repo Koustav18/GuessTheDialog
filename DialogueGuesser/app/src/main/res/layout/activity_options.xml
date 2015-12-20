@@ -28,7 +28,7 @@
            <ImageView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:src="@drawable/play"
+               android:src="@drawable/play_rev"
                android:layout_centerHorizontal="true"
 
                android:layout_marginTop="100dp"
@@ -37,18 +37,18 @@
            <ImageView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:src="@drawable/stats"
+               android:src="@drawable/statistics"
                android:layout_centerHorizontal="true"
                android:layout_below="@+id/play_game"
-               android:layout_marginTop="10dp"
+               android:layout_marginTop="30dp"
                android:id="@+id/stats"
                />
            <ImageView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:src="@drawable/settings"
+               android:src="@drawable/perk_points"
                android:layout_centerHorizontal="true"
-               android:layout_marginTop="10dp"
+               android:layout_marginTop="30dp"
                android:id="@+id/settings"
                android:layout_below="@+id/stats"
                />

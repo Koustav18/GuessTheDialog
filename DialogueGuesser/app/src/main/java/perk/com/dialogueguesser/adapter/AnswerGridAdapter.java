@@ -59,11 +59,11 @@ public class AnswerGridAdapter extends BaseAdapter {
 
             if (convertView == null) {
                 holder = new ViewHolder();
-                convertView = inflater.inflate(R.layout.guess_grid_element, null);
-                convertView.setBackgroundColor(Color.parseColor("#FFD700"));
+                convertView = inflater.inflate(R.layout.answer_grid_element, null);
+                //convertView.setBackgroundColor(Color.parseColor("#FFCDD2"));
                 holder.letter = (TextView) convertView
                         .findViewById(R.id.mGuessCharacter);
-                holder.letter.setTextColor(Color.parseColor("#4B0082"));
+                //holder.letter.setTextColor(Color.parseColor("#4B0082"));
 
                 holder.letter.setText(mAnswerString[position] + "");
                 convertView.setTag(holder);

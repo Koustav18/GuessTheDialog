@@ -5,7 +5,8 @@ package perk.com.dialogueguesser.utility;
  */
 public class AppUtils {
 
-    public static int SPLASH_TIME_OUT=3000;
+    public static String MyPREFERENCES="my_shared_prefs";
+    public static String KEY_HINTS="key_hints";
 
     public static String LEVEL_INFO="level_info";
 

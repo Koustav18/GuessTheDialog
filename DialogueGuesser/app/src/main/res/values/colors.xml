@@ -13,4 +13,8 @@
     <color name="answerTextBackGround">#FFD700</color>
     <color name="answerTextFontColor">#4B0082</color>
 
+    <color name="dialog_background">#EF5350</color>
+    <color name="dialog_button_textColor">#E57373</color>
+
+
 </resources>

@@ -39,22 +39,8 @@ public class SplashActivity extends AppCompatActivity {
         if(dbHandler.getDialogInfo()==null ){
             new ExtractMovieData().execute();
         }else {
+            callOptionActivity();
 
-            new Handler().postDelayed(new Runnable() {
-
-            /*
-             * Showing splash screen with a timer. This will be useful when you
-             * want to show case your app logo / company
-             */
-
-                @Override
-                public void run() {
-                    // This method will be executed once the timer is over
-                    // Start your app main activity
-                    callOptionActivity();
-
-                }
-            }, AppUtils.SPLASH_TIME_OUT);
         }
     }
 
@@ -148,6 +134,12 @@ public class SplashActivity extends AppCompatActivity {
                 String director=mLine.substring(mLine.indexOf("{")+1,mLine.indexOf("}"));
                 Log.d("director",director);
                 dialogDataModel.setDirector(director);
+            }
+            if(mLine.contains("!") && mLine.contains("*")){
+                String genre=mLine.substring(mLine.indexOf("!")+1,mLine.indexOf("*"));
+                Log.d("genre",genre);
+                dialogDataModel.setGenre(genre);
+
             }
             dialogDataModel.setIsAttempted(false);
             return dialogDataModel;

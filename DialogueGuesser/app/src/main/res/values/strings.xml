@@ -5,5 +5,6 @@
     <string name="title_activity_options">OptionsActivity</string>
     <string name="title_activity_level_selector">LevelSelectorActivity</string>
     <string name="title_activity_game">GameActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 
 </resources>

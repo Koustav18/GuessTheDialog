@@ -33,6 +33,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_LEVEL = "level";
     private static final String KEY_DIALOG = "dialog";
     private static final String KEY_ACTOR = "actor";
+    private static final String KEY_GENRE = "genre";
     private static final String KEY_ACTRESS = "actress";
     private static final String KEY_DIRECTOR = "director";
     private static final String KEY_FLIM_NAME = "flim_name";
@@ -56,7 +57,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_LEVEL + " TEXT,"
                 + KEY_DIALOG + " TEXT,"+ KEY_ACTOR + " TEXT,"
                 + KEY_ACTRESS + " TEXT,"+ KEY_DIRECTOR + " TEXT,"
-                + KEY_IS_ATTEMPTED + " TEXT,"+ KEY_FLIM_NAME + " TEXT)";
+
+                + KEY_IS_ATTEMPTED + " TEXT,"+ KEY_FLIM_NAME + " TEXT," + KEY_GENRE + " TEXT)";
 
         String CREATE_LEVEL_TABLE = "CREATE TABLE " + TABLE_LEVEL_INFO + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_LEVEL + " TEXT,"
@@ -104,10 +106,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
             values.put(KEY_LEVEL, levelDataModel.getLevelName()); // Contact Name
             values.put(KEY_DIALOG, levelDataModel.getDialog()); // Contact Phone Number
-            values.put(KEY_ACTOR,levelDataModel.getActor());
+            values.put(KEY_ACTOR, levelDataModel.getActor());
             values.put(KEY_ACTRESS,levelDataModel.getActress());
             values.put(KEY_DIRECTOR,levelDataModel.getDirector());
             values.put(KEY_FLIM_NAME,levelDataModel.getMovieName());
+            values.put(KEY_GENRE,levelDataModel.getGenre());
             if(levelDataModel.isAttempted())
                 values.put(KEY_IS_ATTEMPTED,"Y");
             else if(!levelDataModel.isAttempted())
@@ -153,6 +156,51 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
+    public void updateTableWithAttemptedInformation(ArrayList<String> levelNames,String movieName,String currentLevel) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_IS_ATTEMPTED, "Y");
+        db.update(TABLE_FLIM_DIALOG, contentValues, KEY_FLIM_NAME + "='" + movieName+"'", null);
+
+        //Update Current Level Info
+        String selectQueryCurrent = "SELECT  * FROM " + TABLE_LEVEL_INFO + " WHERE " + KEY_LEVEL + " = '" + currentLevel+"'";
+        Cursor cursorCurrent = db.rawQuery(selectQueryCurrent, null);
+        int pointsCollected;
+        if (cursorCurrent.moveToFirst()) {
+            do {
+                pointsCollected = cursorCurrent.getInt(2);
+            } while (cursorCurrent.moveToNext());
+
+            pointsCollected++;
+            contentValues = new ContentValues();
+            contentValues.put(KEY_POINTS, pointsCollected);
+            db.update(TABLE_LEVEL_INFO, contentValues, KEY_LEVEL + "='" + currentLevel + "'", null);
+        }
+
+        // Select All Query
+        for(String levelName:levelNames) {
+            String selectQuery = "SELECT  * FROM " + TABLE_LEVEL_INFO + " WHERE " + KEY_LEVEL + " = '" + levelName + "'";
+            Cursor cursor = db.rawQuery(selectQuery, null);
+            int dialogToBeCoveredMore;
+            if (cursor.moveToFirst()) {
+                do {
+                    dialogToBeCoveredMore = cursor.getInt(4);
+
+                } while (cursor.moveToNext());
+
+                dialogToBeCoveredMore--;
+                contentValues = new ContentValues();
+                if (dialogToBeCoveredMore == 0) {
+                    contentValues.put(KEY_IS_LOCKED, "N");
+                }
+                contentValues.put(KEY_POINTS_TO_BE_UNLOCKED, dialogToBeCoveredMore);
+                db.update(TABLE_LEVEL_INFO, contentValues, KEY_LEVEL + "='" + levelName + "'", null);
+            }
+        }
+
+
+    }
+
     public ArrayList<DialogDataModel> getDialogInfo(){
         ArrayList<DialogDataModel> dialogDataModels=new ArrayList<DialogDataModel>();
         DialogDataModel dialogDataModel;
@@ -177,6 +225,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 dialogDataModel.setActor(cursor.getString(3));
                 dialogDataModel.setActress(cursor.getString(4));
                 dialogDataModel.setDirector(cursor.getString(5));
+                dialogDataModel.setGenre(cursor.getString(8));
                 if(cursor.getString(6)!=null && cursor.getString(6).equalsIgnoreCase("Y"))
                     dialogDataModel.setIsAttempted(true);
                 else if(cursor.getString(6).equalsIgnoreCase("N"))
@@ -215,6 +264,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 dialogDataModel.setActor(cursor.getString(3));
                 dialogDataModel.setActress(cursor.getString(4));
                 dialogDataModel.setDirector(cursor.getString(5));
+                dialogDataModel.setGenre(cursor.getString(8));
                 if(cursor.getString(6)!=null && cursor.getString(6).equalsIgnoreCase("Y"))
                     dialogDataModel.setIsAttempted(true);
                 else if(cursor.getString(6).equalsIgnoreCase("N"))

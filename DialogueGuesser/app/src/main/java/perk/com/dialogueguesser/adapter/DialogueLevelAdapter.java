@@ -16,6 +16,7 @@ import java.util.List;
 
 import perk.com.dialogueguesser.GameActivity;
 import perk.com.dialogueguesser.R;
+import perk.com.dialogueguesser.interfaces.StartGameInterface;
 import perk.com.dialogueguesser.model.DialogDataModel;
 import perk.com.dialogueguesser.model.LockedLevelModel;
 import perk.com.dialogueguesser.model.UnlockedLevelModel;
@@ -35,12 +36,13 @@ public class DialogueLevelAdapter extends RecyclerView.Adapter<RecyclerView.View
     private final int LOCKED = 0, UNLOCKED = 1;
     private Animation popAnimation;
     private Context mContext;
+    private StartGameInterface startGameInterface;
 
 
-    public DialogueLevelAdapter(List<Object> levelItems,Context mContext) {
+    public DialogueLevelAdapter(List<Object> levelItems,Context mContext,StartGameInterface startGameInterface) {
         this.levelItems = levelItems;
         this.mContext=mContext;
-
+        this.startGameInterface=startGameInterface;
 
     }
 
@@ -105,17 +107,16 @@ public class DialogueLevelAdapter extends RecyclerView.Adapter<RecyclerView.View
         final UnlockedLevelModel unlockedLevelModel=(UnlockedLevelModel)levelItems.get(position);
         if(unlockedLevelModel!=null){
             unLockedLevelViewHolder.getLevelName().setText(unlockedLevelModel.getLevelname());
-            unLockedLevelViewHolder.getPoints().setText(unlockedLevelModel.getPoints()+"");
-            unLockedLevelViewHolder.getDialogues().setText(unlockedLevelModel.getCompletedDialogues()+"/"+unlockedLevelModel.getTotalDialogues());
-            unLockedLevelViewHolder.getProgressBar().setProgress(20);
+            unLockedLevelViewHolder.getPoints().setText(unlockedLevelModel.getPoints() + "");
+            unLockedLevelViewHolder.getDialogues().setText(unlockedLevelModel.getCompletedDialogues() + "/" + unlockedLevelModel.getTotalDialogues());
+            unLockedLevelViewHolder.getProgressBar().setProgress(20*unlockedLevelModel.getCompletedDialogues());
             popAnimation = AnimationUtils.loadAnimation(mContext, R.anim.pop_up);
+            if(levelItems==null || levelItems.size()<=0)
+                unLockedLevelViewHolder.getStartLevel().setEnabled(false);
             unLockedLevelViewHolder.getStartLevel().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, "Start Game", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(mContext, GameActivity.class);
-                    i.putExtra(AppUtils.LEVEL_INFO,unlockedLevelModel.getLevelname());
-                    mContext.startActivity(i);
+                    startGameInterface.startPressed(unlockedLevelModel.getLevelname());
 
                 }
             });
