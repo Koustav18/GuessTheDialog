@@ -3,18 +3,14 @@ package perk.com.dialogueguesser;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
@@ -22,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.FacebookSdk;
 import com.perk.perksdk.PerkManager;
 
 import java.util.ArrayList;
@@ -31,7 +28,6 @@ import perk.com.dialogueguesser.adapter.AnswerGridAdapter;
 import perk.com.dialogueguesser.adapter.GuessGridAdapter;
 import perk.com.dialogueguesser.model.DialogDataModel;
 import perk.com.dialogueguesser.utility.AppUtils;
-import perk.com.dialogueguesser.utility.CustomAlertClass;
 import perk.com.dialogueguesser.utility.CustomHintDialog;
 import perk.com.dialogueguesser.utility.DatabaseHandler;
 
@@ -63,6 +59,8 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         dbHandler=new DatabaseHandler(this);
+
+        PerkManager.startSession(GameActivity.this, AppUtils.PERK_API_KEY);
 
         sharedpreferences = getSharedPreferences(AppUtils.MyPREFERENCES, Context.MODE_PRIVATE);
         editor = sharedpreferences.edit();
@@ -282,6 +280,7 @@ public class GameActivity extends AppCompatActivity {
         String ansGiven = new String(ansCharArray);
         if(actualMovieName.equalsIgnoreCase(ansGiven)){
             Toast.makeText(GameActivity.this, "You have Won", Toast.LENGTH_SHORT).show();
+            PerkManager.trackEvent(GameActivity.this, AppUtils.PERK_API_KEY, AppUtils.PERK_EVENT_ID, false, null, true);
             String[] list;
             ArrayList<String> fileList=new ArrayList<String>();
             try{
@@ -296,7 +295,7 @@ public class GameActivity extends AppCompatActivity {
             }
 
 
-            dbHandler.updateTableWithAttemptedInformation(fileList, actualMovieName,currentLevel);
+            dbHandler.updateTableWithAttemptedInformation(fileList, actualMovieName, currentLevel);
             dialogDataModels.remove(currentDataPosition);
             if(dialogDataModels.size()>0){
                 loadNextSetOfData();
@@ -304,7 +303,7 @@ public class GameActivity extends AppCompatActivity {
                 Toast.makeText(GameActivity.this,"Congratulations! You have completed all the dialogues for this level",Toast.LENGTH_SHORT).show();
             }
 
-           PerkManager.trackEvent(GameActivity.this, AppUtils.PERK_API_KEY, AppUtils.PERK_EVENT_ID, false, null, true);
+
         }else{
             Toast.makeText(GameActivity.this, "You have Lost", Toast.LENGTH_SHORT).show();
         }

@@ -2,21 +2,40 @@ package perk.com.dialogueguesser;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.Profile;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import perk.com.dialogueguesser.model.DialogDataModel;
@@ -29,10 +48,14 @@ public class SplashActivity extends AppCompatActivity {
     private BufferedReader reader = null;
     private DatabaseHandler dbHandler;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+
         dbHandler=new DatabaseHandler(this);
 
 
@@ -42,7 +65,11 @@ public class SplashActivity extends AppCompatActivity {
             callOptionActivity();
 
         }
+
+
     }
+
+
 
     private void callOptionActivity(){
         Intent i = new Intent(SplashActivity.this, OptionsActivity.class);
